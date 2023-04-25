@@ -3,6 +3,7 @@ import * as React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, IGatsbyImageData, getImage } from "gatsby-plugin-image"
 import { Helmet } from "react-helmet"
+import { Container, Title, BlogList, BlogTitle, BlogItem } from "./styles"
 
 export const query = graphql`
   query {
@@ -40,25 +41,25 @@ interface IndexPageProps {
 
 const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
   return (
-    <div>
+    <Container>
       <Helmet>
         <title>Gatsby Contentful Project</title>
       </Helmet>
-      <h1>Blog Posts</h1>
-      <ul>
+      <Title>Blog Posts</Title>
+      <BlogList>
         {data.allContentfulBlogPost.edges.map(({ node }) => (
-          <li key={node.slug}>
-            <h2>{node.title}</h2>
+          <BlogItem key={node.slug}>
+            <BlogTitle>{node.title}</BlogTitle>
             {node.image && (
               <GatsbyImage
                 image={getImage(node.image) as IGatsbyImageData}
                 alt={node.title}
               />
             )}
-          </li>
+          </BlogItem>
         ))}
-      </ul>
-    </div>
+      </BlogList>
+    </Container>
   )
 }
 
