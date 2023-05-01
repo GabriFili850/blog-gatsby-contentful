@@ -22,11 +22,13 @@ To run this project locally, follow these steps:
 `cd gatsby-contentful-project`
 
 2. ### Install the dependencies
+
 After cloning the repository, navigate to the project folder and run the following command to install the required dependencies:
 
 `npm install`
 
 3. ### Set up the environment variables
+
 Create a .env file in the root of your project and add your Contentful space ID and access token:
 
 `CONTENTFUL_SPACE_ID=your_space_id`
