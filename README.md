@@ -1,6 +1,6 @@
-# Gatsby Contentful Project
+# Blog Gatsby Contentful
 
-This is a sample project that demonstrates how to create a blog using Gatsby, Contentful, TypeScript, GraphQL, Styled Components, and Sass.
+This is a project that demonstrates how to create a blog using Gatsby, Contentful, TypeScript, GraphQL, Styled Components, and Sass.
 
 ## Technologies Used
 
@@ -17,9 +17,9 @@ To run this project locally, follow these steps:
 
 1. ### Clone the repository
 
-`git clone <https://github.com/yourusername/gatsby-contentful-project.git>`
+`git clone <https://github.com/GabriFili850/blog-gatsby-contentful.git>`
 
-`cd gatsby-contentful-project`
+`cd blog-gatsby-contentful`
 
 2. ### Install the dependencies
 
