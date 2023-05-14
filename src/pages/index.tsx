@@ -1,9 +1,9 @@
 // src/pages/index.tsx
 import * as React from "react"
-import { graphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 import { GatsbyImage, IGatsbyImageData, getImage } from "gatsby-plugin-image"
 import { Helmet } from "react-helmet"
-import { Container, Title, BlogList, BlogTitle, BlogItem } from "./styles"
+import { Container, Title, BlogList, BlogTitle, BlogItem } from "../styles"
 
 export const query = graphql`
   query {
@@ -57,14 +57,15 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
       <BlogList>
         {data.allContentfulBlogPost.edges.map(({ node }) => (
           <BlogItem key={node.slug}>
-            <BlogTitle>{node.title}</BlogTitle>
+            <Link to={`/blog/${node.slug}`}>
+              <BlogTitle>{node.title}</BlogTitle>
+            </Link>
             {node.image && (
               <GatsbyImage
                 image={getImage(node.image) as IGatsbyImageData}
                 alt={node.title}
               />
             )}
-            {node.content && <p>{node.content.content}</p>}
           </BlogItem>
         ))}
       </BlogList>
