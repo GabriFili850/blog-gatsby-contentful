@@ -12,8 +12,15 @@ export const query = graphql`
         node {
           title
           slug
+          content {
+            content
+          }
           image {
-            gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
+            gatsbyImageData(
+              width: 200
+              placeholder: BLURRED
+              formats: [AUTO, WEBP, AVIF]
+            )
           }
         }
       }
@@ -23,6 +30,7 @@ export const query = graphql`
 
 interface BlogPost {
   node: {
+    content: { content: string }
     title: string
     slug: string
     image: {
@@ -56,6 +64,7 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
                 alt={node.title}
               />
             )}
+            {node.content && <p>{node.content.content}</p>}
           </BlogItem>
         ))}
       </BlogList>

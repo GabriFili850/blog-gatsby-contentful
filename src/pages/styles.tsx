@@ -12,14 +12,14 @@ export const Title = styled.h1`
   margin-bottom: 2rem;
 `
 
-export const BlogList = styled.ul`
+export const BlogList = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
 `
 
-export const BlogItem = styled.li`
+export const BlogItem = styled.div`
   width: 300px;
   padding: 1rem;
   border-radius: 8px;
