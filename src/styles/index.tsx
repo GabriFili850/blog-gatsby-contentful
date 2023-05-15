@@ -15,13 +15,13 @@ export const Title = styled.h1`
 export const BlogList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 3rem;
   justify-content: center;
 `
 
 export const BlogItem = styled.div`
   width: 300px;
-  height: 280px;
+  height: 100%;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

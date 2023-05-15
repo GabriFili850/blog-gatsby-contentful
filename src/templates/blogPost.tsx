@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, IGatsbyImageData, getImage } from "gatsby-plugin-image"
-import { BlogTitle } from "../styles"
+import { BlogTitle, Content } from "./styles"
 
 export const query = graphql`
   query ($slug: String!) {
@@ -12,7 +12,7 @@ export const query = graphql`
       }
       image {
         gatsbyImageData(
-          width: 200
+          width: 400
           placeholder: BLURRED
           formats: [AUTO, WEBP, AVIF]
         )
@@ -43,7 +43,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
         image={getImage(data.contentfulBlogPost.image) as IGatsbyImageData}
         alt={data.contentfulBlogPost.title}
       />
-      <p>{data.contentfulBlogPost.content.content}</p>
+      <Content>{data.contentfulBlogPost.content.content}</Content>
     </div>
   )
 }
