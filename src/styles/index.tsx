@@ -21,6 +21,7 @@ export const BlogList = styled.div`
 
 export const BlogItem = styled.div`
   width: 300px;
+  height: 280px;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

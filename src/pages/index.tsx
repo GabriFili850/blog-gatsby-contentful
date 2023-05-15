@@ -1,4 +1,3 @@
-// src/pages/index.tsx
 import * as React from "react"
 import { Link, graphql } from "gatsby"
 import { GatsbyImage, IGatsbyImageData, getImage } from "gatsby-plugin-image"
@@ -56,17 +55,18 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
       <Title>Blog Posts</Title>
       <BlogList>
         {data.allContentfulBlogPost.edges.map(({ node }) => (
-          <BlogItem key={node.slug}>
-            <Link to={`/blog/${node.slug}`}>
+          <Link to={`/blog/${node.slug}`}>
+            <BlogItem key={node.slug}>
               <BlogTitle>{node.title}</BlogTitle>
-            </Link>
-            {node.image && (
-              <GatsbyImage
-                image={getImage(node.image) as IGatsbyImageData}
-                alt={node.title}
-              />
-            )}
-          </BlogItem>
+
+              {node.image && (
+                <GatsbyImage
+                  image={getImage(node.image) as IGatsbyImageData}
+                  alt={node.title}
+                />
+              )}
+            </BlogItem>
+          </Link>
         ))}
       </BlogList>
     </Container>

@@ -36,10 +36,6 @@ interface BlogPostProps {
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
-  const options = {
-    renderNode: {},
-  }
-
   return (
     <div>
       <BlogTitle>{data.contentfulBlogPost.title}</BlogTitle>
