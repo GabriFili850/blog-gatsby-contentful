@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { BlogTitle } from "../components/BlogTitle"
 
 export const Container = styled.div`
   max-width: 1200px;
@@ -27,7 +28,7 @@ export const BlogItem = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `
 
-export const BlogTitle = styled.h2`
+export const StyledBlogPostTitle = styled(BlogTitle)`
   font-size: 1.5rem;
   margin-bottom: 1rem;
 `

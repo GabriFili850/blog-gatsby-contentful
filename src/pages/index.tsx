@@ -2,7 +2,13 @@ import * as React from "react"
 import { Link, graphql } from "gatsby"
 import { GatsbyImage, IGatsbyImageData, getImage } from "gatsby-plugin-image"
 import { Helmet } from "react-helmet"
-import { Container, Title, BlogList, BlogTitle, BlogItem } from "../styles"
+import {
+  Container,
+  Title,
+  BlogList,
+  StyledBlogPostTitle,
+  BlogItem,
+} from "./styles"
 
 export const query = graphql`
   query {
@@ -16,8 +22,8 @@ export const query = graphql`
           }
           image {
             gatsbyImageData(
-              width: 250
-              height: 200
+              width: 299
+              height: 250
               placeholder: BLURRED
               formats: [AUTO, WEBP, AVIF]
             )
@@ -53,13 +59,12 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
       <Helmet>
         <title>Gatsby Contentful Project</title>
       </Helmet>
-      <Title>Blog Posts</Title>
+      <Title>Blog</Title>
       <BlogList>
         {data.allContentfulBlogPost.edges.map(({ node }) => (
           <Link to={`/blog/${node.slug}`}>
             <BlogItem key={node.slug}>
-              <BlogTitle>{node.title}</BlogTitle>
-
+              <StyledBlogPostTitle>{node.title}</StyledBlogPostTitle>
               {node.image && (
                 <GatsbyImage
                   image={getImage(node.image) as IGatsbyImageData}

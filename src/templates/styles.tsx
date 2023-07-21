@@ -1,6 +1,7 @@
 import styled from "styled-components"
+import { BlogTitle } from "../components/BlogTitle"
 
-export const BlogTitle = styled.h1`
+export const StyledBlogPostTitle = styled(BlogTitle)`
   font-size: 2rem;
   margin-bottom: 1.5rem;
 `
