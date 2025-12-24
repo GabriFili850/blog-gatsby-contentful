@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { GatsbyImage, IGatsbyImageData, getImage } from "gatsby-plugin-image"
-import { BLOCKS, INLINES } from "@contentful/rich-text-types"
+import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image"
+import { INLINES } from "@contentful/rich-text-types"
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import { StyledBlogPostTitle, Content } from "./styles"
 
@@ -37,44 +37,47 @@ interface BlogPostProps {
       contentWithRichtext: {
         raw: string
       }
-      image: {
+      image?: {
         gatsbyImageData: IGatsbyImageData
       }
     }
   }
 }
 
-const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
-  const options = {
-    renderNode: {
-      [INLINES.HYPERLINK]: node => {
-        if (node.content[0]) {
-          return (
-            <a href={node.data.uri} target="_blank" rel="noreferrer">
-              {node.content[0].value}
-            </a>
-          )
-        }
-        return null
-      },
+const richTextOptions = {
+  renderNode: {
+    [INLINES.HYPERLINK]: node => {
+      if (node.content[0]) {
+        return (
+          <a href={node.data.uri} target="_blank" rel="noreferrer">
+            {node.content[0].value}
+          </a>
+        )
+      }
+      return null
     },
-  }
+  },
+}
 
-  const imageData = getImage(data.contentfulBlogPost.image.gatsbyImageData)
+const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
+  const { contentfulBlogPost } = data
+  const richTextRaw = contentfulBlogPost.contentWithRichtext?.raw
+  const richTextDocument = richTextRaw ? JSON.parse(richTextRaw) : null
 
   return (
     <div>
-      <StyledBlogPostTitle>{data.contentfulBlogPost.title}</StyledBlogPostTitle>
-      {imageData && (
-        <GatsbyImage image={imageData} alt={data.contentfulBlogPost.title} />
+      <StyledBlogPostTitle>{contentfulBlogPost.title}</StyledBlogPostTitle>
+      {contentfulBlogPost.image?.gatsbyImageData && (
+        <GatsbyImage
+          image={contentfulBlogPost.image.gatsbyImageData}
+          alt={contentfulBlogPost.title}
+        />
       )}
-      {data.contentfulBlogPost.content && (
-        <Content>{data.contentfulBlogPost.content.content}</Content>
+      {contentfulBlogPost.content && (
+        <Content>{contentfulBlogPost.content.content}</Content>
       )}
-      {documentToReactComponents(
-        JSON.parse(data.contentfulBlogPost.contentWithRichtext.raw),
-        options
-      )}
+      {richTextDocument &&
+        documentToReactComponents(richTextDocument, richTextOptions)}
     </div>
   )
 }

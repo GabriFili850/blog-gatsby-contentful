@@ -8,9 +8,8 @@ export const Container = styled.div`
   background-color: #d2b48c;
 `
 
-export const Title = styled.h1`
+export const Title = styled(BlogTitle)`
   font-size: 3rem;
-  font-family: courier, monospace;
   text-align: center;
   margin-bottom: 2rem;
 `

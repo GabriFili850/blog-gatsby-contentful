@@ -1,6 +1,6 @@
 const path = require(`path`)
 
-exports.createPages = async ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   // Query all Contentful blog post nodes
@@ -18,8 +18,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // Handle errors
   if (result.errors) {
-    console.error(result.errors)
-    throw new Error(result.errors)
+    reporter.panicOnBuild("Error loading Contentful blog posts", result.errors)
+    return
   }
 
   // Create blog post pages

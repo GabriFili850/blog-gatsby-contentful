@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
-import { GatsbyImage, IGatsbyImageData, getImage } from "gatsby-plugin-image"
+import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image"
 import { Helmet } from "react-helmet"
 import {
   Container,
@@ -17,9 +17,6 @@ export const query = graphql`
         node {
           title
           slug
-          content {
-            content
-          }
           image {
             gatsbyImageData(
               width: 299
@@ -36,11 +33,10 @@ export const query = graphql`
 
 interface BlogPost {
   node: {
-    content: { content: string }
     title: string
     slug: string
-    image: {
-      gatsbyImageData: any
+    image?: {
+      gatsbyImageData: IGatsbyImageData
     }
   }
 }
@@ -62,12 +58,12 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
       <Title>Blog</Title>
       <BlogList>
         {data.allContentfulBlogPost.edges.map(({ node }) => (
-          <Link to={`/blog/${node.slug}`}>
-            <BlogItem key={node.slug}>
+          <Link key={node.slug} to={`/blog/${node.slug}`}>
+            <BlogItem>
               <StyledBlogPostTitle>{node.title}</StyledBlogPostTitle>
-              {node.image && (
+              {node.image?.gatsbyImageData && (
                 <GatsbyImage
-                  image={getImage(node.image) as IGatsbyImageData}
+                  image={node.image.gatsbyImageData}
                   alt={node.title}
                 />
               )}
