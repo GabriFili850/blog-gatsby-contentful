@@ -1,5 +1,7 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
+import { ThemeProvider } from "styled-components"
+import { theme } from "../styles/theme"
 import BlogPost from "./blogPost"
 
 const mockData = {
@@ -16,7 +18,11 @@ const mockData = {
 
 describe("BlogPost template", () => {
   it("renders the post title and content", () => {
-    render(<BlogPost data={mockData} />)
+    render(
+      <ThemeProvider theme={theme}>
+        <BlogPost data={mockData} />
+      </ThemeProvider>
+    )
     expect(screen.getByText("Hello world")).toBeTruthy()
     expect(screen.getByText("Plain content")).toBeTruthy()
   })
