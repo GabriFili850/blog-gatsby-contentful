@@ -1,41 +1,45 @@
 import styled from "styled-components"
+import { Link } from "gatsby"
 import { BlogTitle } from "../components/BlogTitle"
 
-export const Container = styled.div`
-  padding-top: 1px;
-  padding-right: 1px;
-  padding-bottom: 50px;
-  background-color: #d2b48c;
+export const Container = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xl};
 `
 
 export const Title = styled(BlogTitle)`
   font-size: 3rem;
   text-align: center;
-  margin-bottom: 2rem;
 `
 
 export const BlogList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3rem;
-  justify-content: center;
-
-  a {
-    text-decoration: none;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: ${({ theme }) => theme.spacing.xl};
 `
 
-export const BlogItem = styled.div`
-  width: 300px;
+export const BlogLink = styled(Link)`
+  display: block;
+  color: inherit;
+`
+
+export const BlogItem = styled.article`
   height: 100%;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #ffefd5;
-  color: darkgreen;
+  padding: ${({ theme }) => theme.spacing.lg};
+  border-radius: ${({ theme }) => theme.radii.md};
+  box-shadow: ${({ theme }) => theme.shadows.soft};
+  background-color: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  ${BlogLink}:hover & {
+    transform: translateY(-2px);
+    box-shadow: ${({ theme }) => theme.shadows.lift};
+  }
 `
 
 export const StyledBlogPostTitle = styled(BlogTitle)`
   font-size: 1.4rem;
-  margin-bottom: 1rem;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
 `

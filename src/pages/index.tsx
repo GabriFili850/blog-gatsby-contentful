@@ -1,13 +1,15 @@
 import * as React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image"
 import { Helmet } from "react-helmet"
+import Layout from "../components/Layout"
 import {
   Container,
   Title,
   BlogList,
   StyledBlogPostTitle,
   BlogItem,
+  BlogLink,
 } from "./styles"
 
 export const query = graphql`
@@ -15,16 +17,7 @@ export const query = graphql`
     allContentfulBlogPost {
       edges {
         node {
-          title
-          slug
-          image {
-            gatsbyImageData(
-              width: 299
-              height: 250
-              placeholder: BLURRED
-              formats: [AUTO, WEBP, AVIF]
-            )
-          }
+          ...BlogPostListFields
         }
       }
     }
@@ -37,6 +30,8 @@ interface BlogPost {
     slug: string
     image?: {
       gatsbyImageData: IGatsbyImageData
+      description?: string | null
+      title?: string | null
     }
   }
 }
@@ -51,27 +46,36 @@ interface IndexPageProps {
 
 const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
   return (
-    <Container>
-      <Helmet>
-        <title>Gatsby Contentful Project</title>
-      </Helmet>
-      <Title>Blog</Title>
-      <BlogList>
-        {data.allContentfulBlogPost.edges.map(({ node }) => (
-          <Link key={node.slug} to={`/blog/${node.slug}`}>
-            <BlogItem>
-              <StyledBlogPostTitle>{node.title}</StyledBlogPostTitle>
-              {node.image?.gatsbyImageData && (
-                <GatsbyImage
-                  image={node.image.gatsbyImageData}
-                  alt={node.title}
-                />
-              )}
-            </BlogItem>
-          </Link>
-        ))}
-      </BlogList>
-    </Container>
+    <Layout>
+      <Container>
+        <Helmet>
+          <title>Gatsby Contentful Project</title>
+        </Helmet>
+        <Title as="h1">Blog</Title>
+        <BlogList>
+          {data.allContentfulBlogPost.edges.map(({ node }) => {
+            const imageAlt =
+              node.image?.description || node.image?.title || node.title
+            return (
+              <BlogLink key={node.slug} to={`/blog/${node.slug}`}>
+                <BlogItem>
+                  <StyledBlogPostTitle as="h2">
+                    {node.title}
+                  </StyledBlogPostTitle>
+                  {node.image?.gatsbyImageData && (
+                    <GatsbyImage
+                      image={node.image.gatsbyImageData}
+                      alt={imageAlt}
+                      loading="lazy"
+                    />
+                  )}
+                </BlogItem>
+              </BlogLink>
+            )
+          })}
+        </BlogList>
+      </Container>
+    </Layout>
   )
 }
 
