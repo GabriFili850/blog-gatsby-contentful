@@ -1,9 +1,12 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import { INLINES } from "@contentful/rich-text-types"
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
+import EmptyState from "../components/EmptyState"
 import Layout from "../components/Layout"
+import { getPostImageAlt, normalizeContentfulPost } from "../data/contentful"
+import { ContentfulBlogPostNode } from "../types/contentful"
 import {
   StyledBlogPostTitle,
   Content,
@@ -21,20 +24,7 @@ export const query = graphql`
 
 interface BlogPostProps {
   data: {
-    contentfulBlogPost: {
-      title: string
-      content: {
-        content: string
-      }
-      contentWithRichtext?: {
-        raw: string
-      } | null
-      image?: {
-        gatsbyImageData: IGatsbyImageData
-        description?: string | null
-        title?: string | null
-      }
-    }
+    contentfulBlogPost: ContentfulBlogPostNode
   }
 }
 
@@ -54,34 +44,33 @@ const richTextOptions = {
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
-  const { contentfulBlogPost } = data
-  const richTextRaw = contentfulBlogPost.contentWithRichtext?.raw
+  const post = normalizeContentfulPost(data.contentfulBlogPost)
+  const richTextRaw = post.richTextRaw
   const richTextDocument = richTextRaw ? JSON.parse(richTextRaw) : null
-  const imageAlt =
-    contentfulBlogPost.image?.description ||
-    contentfulBlogPost.image?.title ||
-    contentfulBlogPost.title
+  const hasBodyContent = Boolean(post.content || richTextDocument)
 
   return (
     <Layout>
       <PostLayout>
-        <StyledBlogPostTitle as="h1">
-          {contentfulBlogPost.title}
-        </StyledBlogPostTitle>
-        {contentfulBlogPost.image?.gatsbyImageData && (
+        <StyledBlogPostTitle as="h1">{post.title}</StyledBlogPostTitle>
+        {post.image?.gatsbyImageData && (
           <GatsbyImage
-            image={contentfulBlogPost.image.gatsbyImageData}
-            alt={imageAlt}
+            image={post.image.gatsbyImageData}
+            alt={getPostImageAlt(post)}
             loading="eager"
           />
         )}
-        {contentfulBlogPost.content && (
-          <Content>{contentfulBlogPost.content.content}</Content>
-        )}
+        {post.content && <Content>{post.content}</Content>}
         {richTextDocument && (
           <RichText>
             {documentToReactComponents(richTextDocument, richTextOptions)}
           </RichText>
+        )}
+        {!hasBodyContent && (
+          <EmptyState
+            title="No content yet"
+            description="This post is still being written."
+          />
         )}
       </PostLayout>
     </Layout>

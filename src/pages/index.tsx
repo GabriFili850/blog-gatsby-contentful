@@ -1,8 +1,14 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import { Helmet } from "react-helmet"
+import EmptyState from "../components/EmptyState"
 import Layout from "../components/Layout"
+import {
+  getPostImageAlt,
+  normalizeContentfulPosts,
+} from "../data/contentful"
+import { ContentfulBlogPostEdge } from "../types/contentful"
 import {
   Container,
   Title,
@@ -24,27 +30,17 @@ export const query = graphql`
   }
 `
 
-interface BlogPost {
-  node: {
-    title: string
-    slug: string
-    image?: {
-      gatsbyImageData: IGatsbyImageData
-      description?: string | null
-      title?: string | null
-    }
-  }
-}
-
 interface IndexPageProps {
   data: {
     allContentfulBlogPost: {
-      edges: BlogPost[]
+      edges: ContentfulBlogPostEdge[]
     }
   }
 }
 
 const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
+  const posts = normalizeContentfulPosts(data.allContentfulBlogPost.edges)
+
   return (
     <Layout>
       <Container>
@@ -52,28 +48,31 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
           <title>Gatsby Contentful Project</title>
         </Helmet>
         <Title as="h1">Blog</Title>
-        <BlogList>
-          {data.allContentfulBlogPost.edges.map(({ node }) => {
-            const imageAlt =
-              node.image?.description || node.image?.title || node.title
-            return (
-              <BlogLink key={node.slug} to={`/blog/${node.slug}`}>
+        {posts.length === 0 ? (
+          <EmptyState
+            title="No posts yet"
+            description="Publish a Contentful post to see it here."
+          />
+        ) : (
+          <BlogList>
+            {posts.map(post => (
+              <BlogLink key={post.slug} to={`/blog/${post.slug}`}>
                 <BlogItem>
                   <StyledBlogPostTitle as="h2">
-                    {node.title}
+                    {post.title}
                   </StyledBlogPostTitle>
-                  {node.image?.gatsbyImageData && (
+                  {post.image?.gatsbyImageData && (
                     <GatsbyImage
-                      image={node.image.gatsbyImageData}
-                      alt={imageAlt}
+                      image={post.image.gatsbyImageData}
+                      alt={getPostImageAlt(post)}
                       loading="lazy"
                     />
                   )}
                 </BlogItem>
               </BlogLink>
-            )
-          })}
-        </BlogList>
+            ))}
+          </BlogList>
+        )}
       </Container>
     </Layout>
   )
