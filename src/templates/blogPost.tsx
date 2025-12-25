@@ -9,6 +9,9 @@ import { getPostImageAlt, normalizeContentfulPost } from "../data/contentful"
 import { ContentfulBlogPostNode } from "../types/contentful"
 import {
   StyledBlogPostTitle,
+  PostHeader,
+  PostMeta,
+  BackLink,
   PostLayout,
   RichText,
 } from "./styles"
@@ -51,7 +54,11 @@ const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
   return (
     <Layout>
       <PostLayout>
-        <StyledBlogPostTitle as="h1">{post.title}</StyledBlogPostTitle>
+        <PostHeader>
+          <BackLink to="/">← Back to blog</BackLink>
+          <PostMeta>Article</PostMeta>
+          <StyledBlogPostTitle as="h1">{post.title}</StyledBlogPostTitle>
+        </PostHeader>
         {post.image?.gatsbyImageData && (
           <GatsbyImage
             image={post.image.gatsbyImageData}
