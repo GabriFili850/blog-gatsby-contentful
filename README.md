@@ -35,8 +35,26 @@ Create a .env file in the root of your project and add your Contentful space ID 
 
 `CONTENTFUL_ACCESS_TOKEN=your_access_token`
 
+For schema tooling (migrations + type generation), also add:
+
+`CONTENTFUL_MANAGEMENT_TOKEN=your_management_token`
+
+`CONTENTFUL_ENVIRONMENT=master`
+
 4. ### Run the development server
 
 `gatsby develop`
 
 This command will start a development server at <http://localhost:8000>. Open your browser and visit the URL to see the project in action.
+
+## Contentful Schema Tooling
+
+- Run GraphQL type generation:
+
+`npm run codegen`
+
+- Contentful codegen uses queries in `contentful/queries/*.graphql`.
+
+- Run a migration script (pass the migration file path after `--`):
+
+`npm run contentful:migrate -- contentful/migrations/000-initial-schema.js`

@@ -1,0 +1,11 @@
+query ContentfulBlogPosts {
+  blogPostCollection {
+    items {
+      sys {
+        id
+      }
+      title
+      slug
+    }
+  }
+}
