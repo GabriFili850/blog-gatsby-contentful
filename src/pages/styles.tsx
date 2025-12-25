@@ -8,6 +8,38 @@ export const BlogList = styled.div`
   gap: ${({ theme }) => theme.spacing.xl};
 `
 
+export const SearchBar = styled.div`
+  width: 100%;
+  max-width: 420px;
+  background: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radii.md};
+  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) =>
+    theme.spacing.md};
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.sm};
+`
+
+export const SearchInput = styled.input`
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: transparent;
+  color: ${({ theme }) => theme.colors.text};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.mutedText};
+  }
+`
+
+export const SearchMeta = styled.p`
+  margin: 0;
+  color: ${({ theme }) => theme.colors.mutedText};
+  font-size: 0.95rem;
+`
+
 export const BlogLink = styled(Link)`
   display: block;
   color: inherit;
@@ -34,6 +66,7 @@ export const BlogItem = styled.article`
     box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.focus};
   }
 `
+
 
 export const StyledBlogPostTitle = styled(BlogTitle)`
   font-size: 1.4rem;

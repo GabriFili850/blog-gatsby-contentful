@@ -10,10 +10,7 @@ import {
   SectionTitle,
   SectionSubtitle,
 } from "../components/Section"
-import {
-  getPostImageAlt,
-  normalizeContentfulPosts,
-} from "../data/contentful"
+import { getPostImageAlt, normalizeContentfulPosts } from "../data/contentful"
 import { ContentfulBlogPostEdge } from "../types/contentful"
 import {
   BlogList,
@@ -21,6 +18,9 @@ import {
   BlogItem,
   BlogLink,
   BlogItemFooter,
+  SearchBar,
+  SearchInput,
+  SearchMeta,
 } from "./styles"
 
 export const query = graphql`
@@ -45,6 +45,17 @@ interface IndexPageProps {
 
 const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
   const posts = normalizeContentfulPosts(data.allContentfulBlogPost.edges)
+  const [query, setQuery] = React.useState("")
+  const trimmedQuery = query.trim()
+  const normalizedQuery = trimmedQuery.toLowerCase()
+  const visiblePosts = normalizedQuery
+    ? posts.filter(post => post.title.toLowerCase().includes(normalizedQuery))
+    : posts
+  const searchStatus = normalizedQuery
+    ? `${visiblePosts.length} result${
+        visiblePosts.length === 1 ? "" : "s"
+      } for "${trimmedQuery}".`
+    : null
 
   return (
     <Layout>
@@ -59,15 +70,33 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
           <SectionSubtitle>
             Stories, experiments, and notes from the Contentful-powered stack.
           </SectionSubtitle>
+          <SearchBar>
+            <SearchInput
+              aria-label="Search blog posts by title"
+              id="blog-search"
+              type="search"
+              placeholder="Search posts by title"
+              value={query}
+              onChange={event => setQuery(event.target.value)}
+            />
+          </SearchBar>
+          {searchStatus && <SearchMeta>{searchStatus}</SearchMeta>}
         </SectionHeader>
-        {posts.length === 0 ? (
-          <EmptyState
-            title="No posts yet"
-            description="Publish a Contentful post to see it here."
-          />
+        {visiblePosts.length === 0 ? (
+          query ? (
+            <EmptyState
+              title="No results"
+              description="Try a different title or clear the search."
+            />
+          ) : (
+            <EmptyState
+              title="No posts yet"
+              description="Publish a Contentful post to see it here."
+            />
+          )
         ) : (
           <BlogList>
-            {posts.map(post => (
+            {visiblePosts.map(post => (
               <BlogLink key={post.slug} to={`/blog/${post.slug}`}>
                 <BlogItem>
                   <StyledBlogPostTitle as="h2">

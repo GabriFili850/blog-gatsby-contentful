@@ -41,6 +41,8 @@ For schema tooling (migrations + type generation), also add:
 
 `CONTENTFUL_ENVIRONMENT=master`
 
+The search bar filters the already-loaded posts by title (no extra API calls).
+
 4. ### Run the development server
 
 `gatsby develop`

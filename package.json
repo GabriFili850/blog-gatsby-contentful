@@ -61,14 +61,14 @@
   "license": "0BSD",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
+    "develop": "test -d .cache || mkdir -p .cache && gatsby develop",
     "codegen": "graphql-codegen --config codegen.js",
     "contentful:migrate": "dotenv -e .env.development -e .env -- sh -c 'contentful space migration --space-id \"$CONTENTFUL_SPACE_ID\" --environment-id \"$CONTENTFUL_ENVIRONMENT\" --management-token \"$CONTENTFUL_MANAGEMENT_TOKEN\" \"$@\" --yes' --",
     "contentful:remove-plain-content": "npm run contentful:migrate -- contentful/migrations/003-remove-plain-content.js --yes",
     "contentful:migrate:by-number": "node scripts/run-migration.js",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "start": "gatsby develop",
+    "start": "test -d .cache || mkdir -p .cache && gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "jest"

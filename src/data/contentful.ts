@@ -1,4 +1,8 @@
-import { ContentfulBlogPostEdge, ContentfulBlogPostNode, Post } from "../types/contentful"
+import {
+  ContentfulBlogPostEdge,
+  ContentfulBlogPostNode,
+  Post,
+} from "../types/contentful"
 
 export const normalizeContentfulPost = (
   node: ContentfulBlogPostNode
