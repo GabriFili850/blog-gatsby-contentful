@@ -58,3 +58,11 @@ This command will start a development server at <http://localhost:8000>. Open yo
 - Run a migration script (pass the migration file path after `--`):
 
 `npm run contentful:migrate -- contentful/migrations/000-initial-schema.js`
+
+- Run a migration by number (auto-accepts prompts):
+
+`npm run contentful:migrate:by-number -- 003`
+
+- Migration scripts live in `contentful/migrations/` and follow `NNN-description.js`.
+
+- `contentful:migrate` auto-loads `.env.development`/`.env` and runs with `--yes`.
