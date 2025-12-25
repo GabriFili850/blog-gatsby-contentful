@@ -13,6 +13,7 @@ import {
   PostMeta,
   BackLink,
   PostLayout,
+  PostMedia,
   RichText,
 } from "./styles"
 
@@ -55,16 +56,18 @@ const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
     <Layout>
       <PostLayout>
         <PostHeader>
-          <BackLink to="/">← Back to blog</BackLink>
-          <PostMeta>Article</PostMeta>
+          <BackLink to="/">Back to blog</BackLink>
+          <PostMeta>Studio notes</PostMeta>
           <StyledBlogPostTitle as="h1">{post.title}</StyledBlogPostTitle>
         </PostHeader>
         {post.image?.gatsbyImageData && (
-          <GatsbyImage
-            image={post.image.gatsbyImageData}
-            alt={getPostImageAlt(post)}
-            loading="eager"
-          />
+          <PostMedia>
+            <GatsbyImage
+              image={post.image.gatsbyImageData}
+              alt={getPostImageAlt(post)}
+              loading="eager"
+            />
+          </PostMedia>
         )}
         {richTextDocument && (
           <RichText>

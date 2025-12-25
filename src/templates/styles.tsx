@@ -3,8 +3,9 @@ import { Link } from "gatsby"
 import { BlogTitle } from "../components/BlogTitle"
 
 export const StyledBlogPostTitle = styled(BlogTitle)`
-  font-size: 2rem;
+  font-size: clamp(2.2rem, 3vw, 2.8rem);
   margin-bottom: ${({ theme }) => theme.spacing.lg};
+  letter-spacing: -0.03em;
 `
 
 export const PostHeader = styled.header`
@@ -16,7 +17,10 @@ export const PostHeader = styled.header`
 export const PostMeta = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.colors.mutedText};
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: ${({ theme }) => theme.typography.heading};
 `
 
 export const BackLink = styled(Link)`
@@ -25,6 +29,10 @@ export const BackLink = styled(Link)`
   gap: ${({ theme }) => theme.spacing.xs};
   color: ${({ theme }) => theme.colors.mutedText};
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  font-family: ${({ theme }) => theme.typography.heading};
 
   &:hover {
     color: ${({ theme }) => theme.colors.accent};
@@ -34,13 +42,23 @@ export const BackLink = styled(Link)`
 export const PostLayout = styled.article`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.lg};
+  gap: ${({ theme }) => theme.spacing.xl};
+  max-width: ${({ theme }) => theme.layout.textWidth};
+  margin: 0 auto;
+`
+
+export const PostMedia = styled.div`
+  border-radius: ${({ theme }) => theme.radii.lg};
+  overflow: hidden;
+  box-shadow: ${({ theme }) => theme.shadows.soft};
+  border: 1px solid ${({ theme }) => theme.colors.border};
 `
 
 export const RichText = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.spacing.md};
-  font-size: 1.05rem;
+  font-size: 1.08rem;
+  line-height: 1.8;
 
   h2,
   h3 {
@@ -52,7 +70,23 @@ export const RichText = styled.div`
     margin: 0;
   }
 
+  ul,
+  ol {
+    margin: 0;
+    padding-left: ${({ theme }) => theme.spacing.lg};
+  }
+
+  blockquote {
+    margin: 0;
+    padding-left: ${({ theme }) => theme.spacing.lg};
+    border-left: 3px solid ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.mutedText};
+  }
+
   a {
     font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
   }
 `

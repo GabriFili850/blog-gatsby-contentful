@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components"
 
 export const GlobalStyle = createGlobalStyle`
-  @import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Literata:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap");
 
   *,
   *::before,
@@ -16,10 +16,24 @@ export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     font-family: ${({ theme }) => theme.typography.body};
-    font-size: 16px;
-    line-height: 1.6;
-    background: ${({ theme }) => theme.colors.background};
+    font-size: 17px;
+    line-height: 1.7;
+    background: ${({ theme }) => theme.colors.backgroundAlt};
     color: ${({ theme }) => theme.colors.text};
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(249, 115, 22, 0.18), transparent 45%),
+      radial-gradient(circle at 80% 0%, rgba(15, 23, 42, 0.18), transparent 55%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.6), transparent 35%);
+    pointer-events: none;
+    z-index: -1;
   }
 
   a {
@@ -42,6 +56,21 @@ export const GlobalStyle = createGlobalStyle`
   img {
     max-width: 100%;
     height: auto;
+  }
+
+  ::selection {
+    background: rgba(249, 115, 22, 0.25);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   .skip-link {

@@ -6,12 +6,27 @@ const SiteWrapper = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.text};
 `
 
 const Header = styled.header`
+  position: sticky;
+  top: 0;
+  z-index: 10;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
-  background: ${({ theme }) => theme.colors.surface};
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 120px;
+    height: 3px;
+    background: ${({ theme }) => theme.colors.accent};
+  }
 `
 
 const HeaderInner = styled.div`
@@ -26,10 +41,22 @@ const HeaderInner = styled.div`
 
 const Brand = styled(Link)`
   font-family: ${({ theme }) => theme.typography.heading};
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 36px;
+    height: 3px;
+    border-radius: 999px;
+    background: ${({ theme }) => theme.colors.accent};
+  }
 `
 
 const Nav = styled.nav`
@@ -39,11 +66,18 @@ const Nav = styled.nav`
 `
 
 const NavLink = styled(Link)`
-  color: ${({ theme }) => theme.colors.mutedText};
-  transition: color 0.2s ease;
+  color: ${({ theme }) => theme.colors.ink};
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: ${({ theme }) => theme.radii.lg};
+  background: ${({ theme }) => theme.colors.surfaceTint};
+  border: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 
   &:hover {
     color: ${({ theme }) => theme.colors.accent};
+    border-color: ${({ theme }) => theme.colors.accent};
+    background: ${({ theme }) => theme.colors.surface};
   }
 `
 
@@ -52,13 +86,14 @@ const Main = styled.main`
   max-width: ${({ theme }) => theme.layout.maxWidth};
   margin: 0 auto;
   width: 100%;
-  padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.lg}
-    ${({ theme }) => theme.spacing["3xl"]};
+  padding: ${({ theme }) => theme.spacing["2xl"]}
+    ${({ theme }) => theme.spacing.lg}
+    ${({ theme }) => theme.spacing["4xl"]};
 `
 
 const Footer = styled.footer`
   border-top: 1px solid ${({ theme }) => theme.colors.border};
-  background: ${({ theme }) => theme.colors.surface};
+  background: ${({ theme }) => theme.colors.surfaceTint};
 `
 
 const FooterInner = styled.div`
@@ -67,6 +102,10 @@ const FooterInner = styled.div`
   padding: ${({ theme }) => theme.spacing.lg};
   color: ${({ theme }) => theme.colors.mutedText};
   font-size: 0.95rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.sm};
+  justify-content: space-between;
 `
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {

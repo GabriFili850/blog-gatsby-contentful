@@ -3,11 +3,12 @@ import styled from "styled-components"
 
 const Wrapper = styled.div`
   padding: ${({ theme }) => theme.spacing.xl};
-  border-radius: ${({ theme }) => theme.radii.md};
+  border-radius: ${({ theme }) => theme.radii.lg};
   border: 1px dashed ${({ theme }) => theme.colors.border};
-  background: ${({ theme }) => theme.colors.surface};
+  background: ${({ theme }) => theme.colors.surfaceTint};
   text-align: center;
   color: ${({ theme }) => theme.colors.mutedText};
+  box-shadow: ${({ theme }) => theme.shadows.soft};
 `
 
 const Title = styled.p`
@@ -18,6 +19,7 @@ const Title = styled.p`
 
 const Description = styled.p`
   margin: 0;
+  font-size: 1.05rem;
 `
 
 type EmptyStateProps = {

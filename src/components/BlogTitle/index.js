@@ -6,4 +6,5 @@ export const BlogTitle = styled.h2`
   font-weight: 700;
   margin: 0 0 ${({ theme }) => theme.spacing.md};
   line-height: 1.2;
+  color: ${({ theme }) => theme.colors.text};
 `

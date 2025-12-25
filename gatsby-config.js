@@ -4,7 +4,7 @@ require("dotenv").config({
 // gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: "Gatsby Contentful Project",
+    title: "Signal & Ink",
     author: "Your Name",
   },
   plugins: [

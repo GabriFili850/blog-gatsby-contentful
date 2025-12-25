@@ -19,6 +19,7 @@ import {
   BlogLink,
   BlogItemFooter,
   SearchBar,
+  SearchIcon,
   SearchInput,
   SearchMeta,
 } from "./styles"
@@ -61,16 +62,17 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
     <Layout>
       <Section aria-labelledby="blog-title">
         <Helmet>
-          <title>Gatsby Contentful Project</title>
+          <title>Signal & Ink</title>
         </Helmet>
         <SectionHeader>
           <SectionTitle as="h1" id="blog-title">
-            Blog
+            Journal
           </SectionTitle>
           <SectionSubtitle>
-            Stories, experiments, and notes from the Contentful-powered stack.
+            Field notes, studio drafts, and launch-ready ideas from the stack.
           </SectionSubtitle>
           <SearchBar>
+            <SearchIcon aria-hidden="true">Search</SearchIcon>
             <SearchInput
               aria-label="Search blog posts by title"
               id="blog-search"
@@ -109,7 +111,7 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
                       loading="lazy"
                     />
                   )}
-                  <BlogItemFooter>Read article</BlogItemFooter>
+                  <BlogItemFooter>Read article -></BlogItemFooter>
                 </BlogItem>
               </BlogLink>
             ))}
