@@ -59,28 +59,6 @@ const Brand = styled(Link)`
   }
 `
 
-const Nav = styled.nav`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing.md};
-  font-weight: 600;
-`
-
-const NavLink = styled(Link)`
-  color: ${({ theme }) => theme.colors.ink};
-  font-weight: 600;
-  padding: 0.35rem 0.85rem;
-  border-radius: ${({ theme }) => theme.radii.lg};
-  background: ${({ theme }) => theme.colors.surfaceTint};
-  border: 1px solid transparent;
-  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.accent};
-    border-color: ${({ theme }) => theme.colors.accent};
-    background: ${({ theme }) => theme.colors.surface};
-  }
-`
-
 const Main = styled.main`
   flex: 1;
   max-width: ${({ theme }) => theme.layout.maxWidth};
@@ -128,9 +106,6 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
       <Header>
         <HeaderInner>
           <Brand to="/">{data.site.siteMetadata.title}</Brand>
-          <Nav aria-label="Primary">
-            <NavLink to="/">Home</NavLink>
-          </Nav>
         </HeaderInner>
       </Header>
       <Main id="main-content">{children}</Main>
