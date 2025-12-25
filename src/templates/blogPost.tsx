@@ -9,7 +9,6 @@ import { getPostImageAlt, normalizeContentfulPost } from "../data/contentful"
 import { ContentfulBlogPostNode } from "../types/contentful"
 import {
   StyledBlogPostTitle,
-  Content,
   PostLayout,
   RichText,
 } from "./styles"
@@ -47,7 +46,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
   const post = normalizeContentfulPost(data.contentfulBlogPost)
   const richTextRaw = post.richTextRaw
   const richTextDocument = richTextRaw ? JSON.parse(richTextRaw) : null
-  const hasBodyContent = Boolean(post.content || richTextDocument)
+  const hasBodyContent = Boolean(richTextDocument)
 
   return (
     <Layout>
@@ -60,7 +59,6 @@ const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
             loading="eager"
           />
         )}
-        {post.content && <Content>{post.content}</Content>}
         {richTextDocument && (
           <RichText>
             {documentToReactComponents(richTextDocument, richTextOptions)}

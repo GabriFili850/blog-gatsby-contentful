@@ -6,7 +6,6 @@ export const normalizeContentfulPost = (
   title: node.title ?? "Untitled post",
   slug: node.slug ?? "",
   image: node.image ?? null,
-  content: node.content?.content ?? null,
   richTextRaw: node.contentWithRichtext?.raw ?? null,
 })
 

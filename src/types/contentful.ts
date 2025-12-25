@@ -9,9 +9,6 @@ export type ContentfulAsset = {
 export type ContentfulBlogPostNode = {
   title?: string | null
   slug?: string | null
-  content?: {
-    content?: string | null
-  } | null
   contentWithRichtext?: {
     raw?: string | null
   } | null
@@ -26,6 +23,5 @@ export type Post = {
   title: string
   slug: string
   image: ContentfulAsset | null
-  content: string | null
   richTextRaw: string | null
 }

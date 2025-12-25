@@ -6,12 +6,6 @@ export const StyledBlogPostTitle = styled(BlogTitle)`
   margin-bottom: ${({ theme }) => theme.spacing.lg};
 `
 
-export const Content = styled.div`
-  font-size: 1.1rem;
-  color: ${({ theme }) => theme.colors.text};
-  margin-top: ${({ theme }) => theme.spacing.md};
-`
-
 export const PostLayout = styled.article`
   display: flex;
   flex-direction: column;
