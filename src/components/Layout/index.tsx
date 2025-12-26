@@ -65,8 +65,7 @@ const Main = styled.main`
   margin: 0 auto;
   width: 100%;
   padding: ${({ theme }) => theme.spacing["2xl"]}
-    ${({ theme }) => theme.spacing.lg}
-    ${({ theme }) => theme.spacing["4xl"]};
+    ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing["4xl"]};
 `
 
 const Footer = styled.footer`
@@ -84,6 +83,30 @@ const FooterInner = styled.div`
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing.sm};
   justify-content: space-between;
+`
+
+const FooterColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xs};
+`
+
+const FooterTitle = styled.span`
+  font-family: ${({ theme }) => theme.typography.heading};
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.text};
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+`
+
+const FooterLink = styled.a`
+  color: ${({ theme }) => theme.colors.mutedText};
+  font-weight: 600;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.accent};
+  }
 `
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
@@ -111,9 +134,24 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
       <Main id="main-content">{children}</Main>
       <Footer>
         <FooterInner>
-          {data.site.siteMetadata.author
-            ? `Written by ${data.site.siteMetadata.author}.`
-            : "Contentful blog."}
+          <FooterColumn>
+            <FooterTitle>Signal & Ink</FooterTitle>
+            <span>
+              Essays, frameworks, and product notes from{" "}
+              {data.site.siteMetadata.author || "the studio"}.
+            </span>
+          </FooterColumn>
+          <FooterColumn>
+            <FooterTitle>Explore</FooterTitle>
+            <FooterLink href="/">Home</FooterLink>
+            <FooterLink href="/#blog-title">Journal</FooterLink>
+          </FooterColumn>
+          <FooterColumn>
+            <FooterTitle>Contact</FooterTitle>
+            <FooterLink href="mailto:hello@example.com">
+              hello@example.com
+            </FooterLink>
+          </FooterColumn>
         </FooterInner>
       </Footer>
     </SiteWrapper>
