@@ -1,5 +1,6 @@
 import * as React from "react"
 import { graphql } from "gatsby"
+import { useLocation } from "@reach/router"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { Helmet } from "react-helmet"
 import EmptyState from "../components/EmptyState"
@@ -31,6 +32,7 @@ import {
   SearchIcon,
   SearchInput,
   SearchMeta,
+  FilterLink,
 } from "./styles"
 
 export const query = graphql`
@@ -54,13 +56,28 @@ interface IndexPageProps {
 }
 
 const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
+  const location = useLocation()
   const posts = normalizeContentfulPosts(data.allContentfulBlogPost.edges)
   const [query, setQuery] = React.useState("")
   const trimmedQuery = query.trim()
   const normalizedQuery = trimmedQuery.toLowerCase()
-  const visiblePosts = normalizedQuery
-    ? posts.filter(post => post.title.toLowerCase().includes(normalizedQuery))
-    : posts
+  const topicValue = React.useMemo(() => {
+    if (!location.search) {
+      return ""
+    }
+    const params = new URLSearchParams(location.search)
+    return params.get("topic") || ""
+  }, [location.search])
+
+  const visiblePosts = posts.filter(post => {
+    if (topicValue && post.topic !== topicValue) {
+      return false
+    }
+
+    return normalizedQuery
+      ? post.title.toLowerCase().includes(normalizedQuery)
+      : true
+  })
   const sidebarPosts = [...posts]
     .sort((a, b) => {
       const aTime = a.updatedAt ? Date.parse(a.updatedAt) : 0
@@ -72,7 +89,11 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
     ? `${visiblePosts.length} result${
         visiblePosts.length === 1 ? "" : "s"
       } for "${trimmedQuery}".`
-    : null
+    : topicValue
+      ? `${visiblePosts.length} post${
+          visiblePosts.length === 1 ? "" : "s"
+        } in this topic.`
+      : null
 
   return (
     <Layout>
@@ -98,7 +119,14 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
               onChange={event => setQuery(event.target.value)}
             />
           </SearchBar>
-          {searchStatus && <SearchMeta>{searchStatus}</SearchMeta>}
+          {searchStatus && (
+            <SearchMeta>
+              {searchStatus}
+              {topicValue && (
+                <FilterLink href="/">Clear filter</FilterLink>
+              )}
+            </SearchMeta>
+          )}
         </SectionHeader>
         <PageGrid>
           <div>
@@ -122,13 +150,9 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
                       <StyledBlogPostTitle as="h2">
                         {post.title}
                       </StyledBlogPostTitle>
-                      {post.topics.length > 0 && (
+                      {post.topic && (
                         <TopicRow>
-                          {post.topics.slice(0, 2).map(topic => (
-                            <TopicBadge key={topic.slug || topic.name}>
-                              {topic.name}
-                            </TopicBadge>
-                          ))}
+                          <TopicBadge>{post.topic}</TopicBadge>
                         </TopicRow>
                       )}
                       {post.image?.gatsbyImageData && (

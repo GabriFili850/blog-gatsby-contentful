@@ -5,10 +5,7 @@ export const blogPostListFields = graphql`
     title
     slug
     updatedAt
-    topics {
-      name
-      slug
-    }
+    topic
     image {
       description
       title
@@ -26,10 +23,7 @@ export const blogPostPageFields = graphql`
   fragment BlogPostPageFields on ContentfulBlogPost {
     title
     updatedAt
-    topics {
-      name
-      slug
-    }
+    topic
     contentWithRichtext {
       raw
     }

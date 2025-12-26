@@ -130,6 +130,12 @@ export const SearchMeta = styled.p`
   text-transform: uppercase;
 `
 
+export const FilterLink = styled.a`
+  color: ${({ theme }) => theme.colors.accent};
+  font-weight: 600;
+  margin-left: ${({ theme }) => theme.spacing.xs};
+`
+
 export const BlogLink = styled(Link)`
   display: block;
   color: inherit;

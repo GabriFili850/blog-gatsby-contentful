@@ -58,6 +58,70 @@ export const Brand = styled(Link)`
   }
 `
 
+export const Nav = styled.nav`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.md};
+`
+
+export const TopicButton = styled.button`
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.colors.surfaceTint};
+  color: ${({ theme }) => theme.colors.ink};
+  border-radius: ${({ theme }) => theme.radii.lg};
+  padding: 0.35rem 0.85rem;
+  font-weight: 600;
+  font-family: ${({ theme }) => theme.typography.heading};
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    color: ${({ theme }) => theme.colors.accent};
+    border-color: ${({ theme }) => theme.colors.accent};
+    background: ${({ theme }) => theme.colors.surface};
+  }
+`
+
+export const TopicMenu = styled.div`
+  position: absolute;
+  right: ${({ theme }) => theme.spacing.lg};
+  top: calc(100% + 0.75rem);
+  background: ${({ theme }) => theme.colors.surface};
+  border-radius: ${({ theme }) => theme.radii.lg};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  box-shadow: ${({ theme }) => theme.shadows.lift};
+  min-width: 220px;
+  padding: ${({ theme }) => theme.spacing.sm};
+  display: grid;
+  gap: ${({ theme }) => theme.spacing.xs};
+  z-index: 20;
+`
+
+export const TopicLink = styled(Link)`
+  padding: 0.45rem 0.65rem;
+  border-radius: ${({ theme }) => theme.radii.md};
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: 600;
+
+  &:hover,
+  &:focus-visible {
+    background: ${({ theme }) => theme.colors.surfaceTint};
+    color: ${({ theme }) => theme.colors.accent};
+  }
+`
+
+export const TopicMenuTitle = styled.span`
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: ${({ theme }) => theme.colors.mutedText};
+  font-family: ${({ theme }) => theme.typography.heading};
+  padding: 0.35rem 0.65rem;
+`
+
 export const Main = styled.main`
   flex: 1;
   max-width: ${({ theme }) => theme.layout.maxWidth};

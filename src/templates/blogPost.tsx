@@ -61,13 +61,9 @@ const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
           <BackLink to="/">Back to blog</BackLink>
           <PostMeta>Studio notes</PostMeta>
           <StyledBlogPostTitle as="h1">{post.title}</StyledBlogPostTitle>
-          {post.topics.length > 0 && (
+          {post.topic && (
             <TopicRow>
-              {post.topics.map(topic => (
-                <TopicBadge key={topic.slug || topic.name}>
-                  {topic.name}
-                </TopicBadge>
-              ))}
+              <TopicBadge>{post.topic}</TopicBadge>
             </TopicRow>
           )}
         </PostHeader>
