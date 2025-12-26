@@ -14,6 +14,8 @@ import {
   BackLink,
   PostLayout,
   PostMedia,
+  TopicRow,
+  TopicBadge,
   RichText,
 } from "./styles"
 
@@ -59,6 +61,15 @@ const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
           <BackLink to="/">Back to blog</BackLink>
           <PostMeta>Studio notes</PostMeta>
           <StyledBlogPostTitle as="h1">{post.title}</StyledBlogPostTitle>
+          {post.topics.length > 0 && (
+            <TopicRow>
+              {post.topics.map(topic => (
+                <TopicBadge key={topic.slug || topic.name}>
+                  {topic.name}
+                </TopicBadge>
+              ))}
+            </TopicRow>
+          )}
         </PostHeader>
         {post.image?.gatsbyImageData && (
           <PostMedia>

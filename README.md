@@ -41,6 +41,8 @@ For schema tooling (migrations + type generation), also add:
 
 `CONTENTFUL_ENVIRONMENT=master`
 
+`CONTENTFUL_LOCALE=en-US`
+
 The search bar filters the already-loaded posts by title (no extra API calls).
 
 4. ### Run the development server
@@ -68,3 +70,5 @@ This command will start a development server at <http://localhost:8000>. Open yo
 - Migration scripts live in `contentful/migrations/` and follow `NNN-description.js`.
 
 - `contentful:migrate` auto-loads `.env.development`/`.env` and runs with `--yes`.
+
+- After a numbered migration runs, the migration tracker entry is updated automatically.

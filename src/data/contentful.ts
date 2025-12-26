@@ -9,6 +9,8 @@ export const normalizeContentfulPost = (
 ): Post => ({
   title: node.title ?? "Untitled post",
   slug: node.slug ?? "",
+  updatedAt: node.updatedAt ?? null,
+  topics: node.topics?.filter(Boolean) ?? [],
   image: node.image ?? null,
   richTextRaw: node.contentWithRichtext?.raw ?? null,
 })

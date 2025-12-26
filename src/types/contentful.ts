@@ -6,9 +6,20 @@ export type ContentfulAsset = {
   title?: string | null
 }
 
+export type ContentfulTopicNode = {
+  name?: string | null
+  slug?: string | null
+  description?: string | null
+  color?: string | null
+  featured?: boolean | null
+  sortOrder?: number | null
+}
+
 export type ContentfulBlogPostNode = {
   title?: string | null
   slug?: string | null
+  updatedAt?: string | null
+  topics?: ContentfulTopicNode[] | null
   contentWithRichtext?: {
     raw?: string | null
   } | null
@@ -22,6 +33,8 @@ export type ContentfulBlogPostEdge = {
 export type Post = {
   title: string
   slug: string
+  updatedAt: string | null
+  topics: ContentfulTopicNode[]
   image: ContentfulAsset | null
   richTextRaw: string | null
 }

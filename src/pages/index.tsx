@@ -18,6 +18,15 @@ import {
   BlogItem,
   BlogLink,
   BlogItemFooter,
+  PageGrid,
+  Sidebar,
+  SidebarTitle,
+  SidebarList,
+  SidebarItem,
+  SidebarLink,
+  SidebarMeta,
+  TopicRow,
+  TopicBadge,
   SearchBar,
   SearchIcon,
   SearchInput,
@@ -52,6 +61,13 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
   const visiblePosts = normalizedQuery
     ? posts.filter(post => post.title.toLowerCase().includes(normalizedQuery))
     : posts
+  const sidebarPosts = [...posts]
+    .sort((a, b) => {
+      const aTime = a.updatedAt ? Date.parse(a.updatedAt) : 0
+      const bTime = b.updatedAt ? Date.parse(b.updatedAt) : 0
+      return bTime - aTime
+    })
+    .slice(0, 3)
   const searchStatus = normalizedQuery
     ? `${visiblePosts.length} result${
         visiblePosts.length === 1 ? "" : "s"
@@ -84,39 +100,65 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
           </SearchBar>
           {searchStatus && <SearchMeta>{searchStatus}</SearchMeta>}
         </SectionHeader>
-        {visiblePosts.length === 0 ? (
-          query ? (
-            <EmptyState
-              title="No results"
-              description="Try a different title or clear the search."
-            />
-          ) : (
-            <EmptyState
-              title="No posts yet"
-              description="Publish a Contentful post to see it here."
-            />
-          )
-        ) : (
-          <BlogList>
-            {visiblePosts.map(post => (
-              <BlogLink key={post.slug} to={`/blog/${post.slug}`}>
-                <BlogItem>
-                  <StyledBlogPostTitle as="h2">
+        <PageGrid>
+          <div>
+            {visiblePosts.length === 0 ? (
+              query ? (
+                <EmptyState
+                  title="No results"
+                  description="Try a different title or clear the search."
+                />
+              ) : (
+                <EmptyState
+                  title="No posts yet"
+                  description="Publish a Contentful post to see it here."
+                />
+              )
+            ) : (
+              <BlogList>
+                {visiblePosts.map(post => (
+                  <BlogLink key={post.slug} to={`/blog/${post.slug}`}>
+                    <BlogItem>
+                      <StyledBlogPostTitle as="h2">
+                        {post.title}
+                      </StyledBlogPostTitle>
+                      {post.topics.length > 0 && (
+                        <TopicRow>
+                          {post.topics.slice(0, 2).map(topic => (
+                            <TopicBadge key={topic.slug || topic.name}>
+                              {topic.name}
+                            </TopicBadge>
+                          ))}
+                        </TopicRow>
+                      )}
+                      {post.image?.gatsbyImageData && (
+                        <GatsbyImage
+                          image={post.image.gatsbyImageData}
+                          alt={getPostImageAlt(post)}
+                          loading="lazy"
+                        />
+                      )}
+                      <BlogItemFooter>Read article -></BlogItemFooter>
+                    </BlogItem>
+                  </BlogLink>
+                ))}
+              </BlogList>
+            )}
+          </div>
+          <Sidebar aria-label="Featured posts">
+            <SidebarTitle>Featured</SidebarTitle>
+            <SidebarList>
+              {sidebarPosts.map(post => (
+                <SidebarItem key={post.slug}>
+                  <SidebarLink to={`/blog/${post.slug}`}>
                     {post.title}
-                  </StyledBlogPostTitle>
-                  {post.image?.gatsbyImageData && (
-                    <GatsbyImage
-                      image={post.image.gatsbyImageData}
-                      alt={getPostImageAlt(post)}
-                      loading="lazy"
-                    />
-                  )}
-                  <BlogItemFooter>Read article -></BlogItemFooter>
-                </BlogItem>
-              </BlogLink>
-            ))}
-          </BlogList>
-        )}
+                  </SidebarLink>
+                  <SidebarMeta>Read in journal</SidebarMeta>
+                </SidebarItem>
+              ))}
+            </SidebarList>
+          </Sidebar>
+        </PageGrid>
       </Section>
     </Layout>
   )

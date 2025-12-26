@@ -8,6 +8,77 @@ export const BlogList = styled.div`
   gap: ${({ theme }) => theme.spacing["2xl"]};
 `
 
+export const PageGrid = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: ${({ theme }) => theme.spacing["2xl"]};
+  align-items: start;
+
+  @media (max-width: 980px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+`
+
+export const Sidebar = styled.aside`
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.lg};
+  padding: ${({ theme }) => theme.spacing.lg};
+  border-radius: ${({ theme }) => theme.radii.lg};
+  background: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  box-shadow: ${({ theme }) => theme.shadows.soft};
+
+  @media (max-width: 980px) {
+    position: static;
+  }
+`
+
+export const SidebarTitle = styled.h2`
+  margin: 0;
+  font-family: ${({ theme }) => theme.typography.heading};
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.mutedText};
+`
+
+export const SidebarList = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing.md};
+`
+
+export const SidebarItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xs};
+  padding-bottom: ${({ theme }) => theme.spacing.md};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+`
+
+export const SidebarLink = styled(Link)`
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: 600;
+  font-family: ${({ theme }) => theme.typography.heading};
+  letter-spacing: -0.01em;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.accent};
+  }
+`
+
+export const SidebarMeta = styled.span`
+  font-size: 0.85rem;
+  color: ${({ theme }) => theme.colors.mutedText};
+`
+
 export const SearchBar = styled.div`
   width: 100%;
   max-width: 480px;
@@ -137,4 +208,22 @@ export const BlogItemFooter = styled.div`
   ${BlogLink}:hover & {
     color: ${({ theme }) => theme.colors.accent};
   }
+`
+
+export const TopicRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.xs};
+`
+
+export const TopicBadge = styled.span`
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: ${({ theme }) => theme.colors.surfaceTint};
+  color: ${({ theme }) => theme.colors.mutedText};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  font-family: ${({ theme }) => theme.typography.heading};
 `
