@@ -27,11 +27,55 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
           author
         }
       }
+      allContentfulBlogPost {
+        nodes {
+          topic
+        }
+      }
     }
   `)
   const [isOpen, setIsOpen] = React.useState(false)
   const menuRef = React.useRef<HTMLDivElement | null>(null)
   const buttonRef = React.useRef<HTMLButtonElement | null>(null)
+  const availableTopics = React.useMemo(() => {
+    const topicList = [
+      "Yoga",
+      "Time management",
+      "Cooking",
+      "Astronomy",
+      "Eco-friendly living",
+      "Mindfulness",
+      "AI",
+      "Crypto",
+      "Software development",
+      "Product strategy",
+      "UX design",
+      "Leadership",
+      "Remote work",
+      "Personal finance",
+      "Health & nutrition",
+      "Entrepreneurship",
+      "Marketing",
+      "Writing",
+      "Psychology",
+      "Habit building",
+      "Learning",
+      "Sustainability",
+      "Travel",
+      "Photography",
+      "Data science",
+      "Cybersecurity",
+      "Career growth",
+      "Startups",
+      "Philosophy",
+    ]
+    const usedTopics = new Set(
+      data.allContentfulBlogPost.nodes
+        .map(node => node.topic)
+        .filter(Boolean)
+    )
+    return topicList.filter(topic => usedTopics.has(topic))
+  }, [data.allContentfulBlogPost.nodes])
 
   React.useEffect(() => {
     const handleClick = event => {
@@ -85,37 +129,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
             <TopicLink to="/" role="menuitem">
               All topics
             </TopicLink>
-            {[
-              "Yoga",
-              "Time management",
-              "Cooking",
-              "Astronomy",
-              "Eco-friendly living",
-              "Mindfulness",
-              "AI",
-              "Crypto",
-              "Software development",
-              "Product strategy",
-              "UX design",
-              "Leadership",
-              "Remote work",
-              "Personal finance",
-              "Health & nutrition",
-              "Entrepreneurship",
-              "Marketing",
-              "Writing",
-              "Psychology",
-              "Habit building",
-              "Learning",
-              "Sustainability",
-              "Travel",
-              "Photography",
-              "Data science",
-              "Cybersecurity",
-              "Career growth",
-              "Startups",
-              "Philosophy",
-            ].map(topic => (
+            {availableTopics.map(topic => (
               <TopicLink
                 key={topic}
                 to={`/?topic=${encodeURIComponent(topic)}`}
