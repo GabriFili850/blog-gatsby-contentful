@@ -34,3 +34,17 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     })
   })
 }
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  createTypes(`
+    type ContentfulBlogPost implements Node {
+      topics: [ContentfulTopic]
+    }
+
+    type ContentfulTopic implements Node {
+      name: String
+      slug: String
+    }
+  `)
+}
