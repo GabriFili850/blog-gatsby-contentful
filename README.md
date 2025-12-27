@@ -72,3 +72,7 @@ This command will start a development server at <http://localhost:8000>. Open yo
 - `contentful:migrate` auto-loads `.env.development`/`.env` and runs with `--yes`.
 
 - After a numbered migration runs, the migration tracker entry is updated automatically.
+
+## Topics
+
+Topics are now a single-select dropdown on the `blogPost` content type. The header dropdown only shows topics that have at least one post.
