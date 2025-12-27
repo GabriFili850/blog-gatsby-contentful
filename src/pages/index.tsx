@@ -14,6 +14,12 @@ import {
 import { getPostImageAlt, normalizeContentfulPosts } from "../data/contentful"
 import { ContentfulBlogPostEdge } from "../types/contentful"
 import {
+  filterPosts,
+  getLatestPosts,
+  normalizeQuery,
+} from "../utils/posts"
+import { TopicRow, TopicBadge } from "../components/TopicBadge"
+import {
   BlogList,
   StyledBlogPostTitle,
   BlogItem,
@@ -26,8 +32,6 @@ import {
   SidebarItem,
   SidebarLink,
   SidebarMeta,
-  TopicRow,
-  TopicBadge,
   SearchBar,
   SearchIcon,
   SearchInput,
@@ -57,10 +61,13 @@ interface IndexPageProps {
 
 const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
   const location = useLocation()
-  const posts = normalizeContentfulPosts(data.allContentfulBlogPost.edges)
+  const posts = React.useMemo(
+    () => normalizeContentfulPosts(data.allContentfulBlogPost.edges),
+    [data.allContentfulBlogPost.edges]
+  )
   const [query, setQuery] = React.useState("")
-  const trimmedQuery = query.trim()
-  const normalizedQuery = trimmedQuery.toLowerCase()
+  const { trimmed: trimmedQuery, normalized: normalizedQuery } =
+    React.useMemo(() => normalizeQuery(query), [query])
   const topicValue = React.useMemo(() => {
     if (!location.search) {
       return ""
@@ -69,31 +76,31 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
     return params.get("topic") || ""
   }, [location.search])
 
-  const visiblePosts = posts.filter(post => {
-    if (topicValue && post.topic !== topicValue) {
-      return false
-    }
+  const visiblePosts = React.useMemo(
+    () => filterPosts(posts, normalizedQuery, topicValue),
+    [posts, normalizedQuery, topicValue]
+  )
 
-    return normalizedQuery
-      ? post.title.toLowerCase().includes(normalizedQuery)
-      : true
-  })
-  const sidebarPosts = [...posts]
-    .sort((a, b) => {
-      const aTime = a.updatedAt ? Date.parse(a.updatedAt) : 0
-      const bTime = b.updatedAt ? Date.parse(b.updatedAt) : 0
-      return bTime - aTime
-    })
-    .slice(0, 3)
-  const searchStatus = normalizedQuery
-    ? `${visiblePosts.length} result${
+  const sidebarPosts = React.useMemo(
+    () => getLatestPosts(posts, 3),
+    [posts]
+  )
+
+  const searchStatus = React.useMemo(() => {
+    if (normalizedQuery) {
+      return `${visiblePosts.length} result${
         visiblePosts.length === 1 ? "" : "s"
       } for "${trimmedQuery}".`
-    : topicValue
-      ? `${visiblePosts.length} post${
-          visiblePosts.length === 1 ? "" : "s"
-        } in this topic.`
-      : null
+    }
+
+    if (topicValue) {
+      return `${visiblePosts.length} post${
+        visiblePosts.length === 1 ? "" : "s"
+      } in this topic.`
+    }
+
+    return null
+  }, [normalizedQuery, visiblePosts.length, trimmedQuery, topicValue])
 
   return (
     <Layout>

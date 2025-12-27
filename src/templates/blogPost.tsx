@@ -7,6 +7,7 @@ import EmptyState from "../components/EmptyState"
 import Layout from "../components/Layout"
 import { getPostImageAlt, normalizeContentfulPost } from "../data/contentful"
 import { ContentfulBlogPostNode } from "../types/contentful"
+import { TopicRow, TopicBadge } from "../components/TopicBadge"
 import {
   StyledBlogPostTitle,
   PostHeader,
@@ -14,8 +15,6 @@ import {
   BackLink,
   PostLayout,
   PostMedia,
-  TopicRow,
-  TopicBadge,
   RichText,
 } from "./styles"
 

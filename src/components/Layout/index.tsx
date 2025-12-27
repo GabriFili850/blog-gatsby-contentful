@@ -17,6 +17,7 @@ import {
   FooterTitle,
   FooterLink,
 } from "./styles"
+import { TOPIC_OPTIONS } from "../../constants/topics"
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -38,43 +39,12 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const menuRef = React.useRef<HTMLDivElement | null>(null)
   const buttonRef = React.useRef<HTMLButtonElement | null>(null)
   const availableTopics = React.useMemo(() => {
-    const topicList = [
-      "Yoga",
-      "Time management",
-      "Cooking",
-      "Astronomy",
-      "Eco-friendly living",
-      "Mindfulness",
-      "AI",
-      "Crypto",
-      "Software development",
-      "Product strategy",
-      "UX design",
-      "Leadership",
-      "Remote work",
-      "Personal finance",
-      "Health & nutrition",
-      "Entrepreneurship",
-      "Marketing",
-      "Writing",
-      "Psychology",
-      "Habit building",
-      "Learning",
-      "Sustainability",
-      "Travel",
-      "Photography",
-      "Data science",
-      "Cybersecurity",
-      "Career growth",
-      "Startups",
-      "Philosophy",
-    ]
     const usedTopics = new Set(
       data.allContentfulBlogPost.nodes
         .map(node => node.topic)
         .filter(Boolean)
     )
-    return topicList.filter(topic => usedTopics.has(topic))
+    return TOPIC_OPTIONS.filter(topic => usedTopics.has(topic))
   }, [data.allContentfulBlogPost.nodes])
 
   React.useEffect(() => {

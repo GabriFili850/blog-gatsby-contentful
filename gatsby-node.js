@@ -39,13 +39,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   createTypes(`
     type ContentfulBlogPost implements Node {
-      topics: [ContentfulTopic]
       topic: String
-    }
-
-    type ContentfulTopic implements Node {
-      name: String
-      slug: String
     }
   `)
 }
